@@ -15,6 +15,7 @@ function setup()
     video.hide();
 
     poseNet = ml5.poseNet(video,modelLoaded);
+    poseNet.on('pose',gotPoses);
 }
 
 function modelLoaded()
@@ -22,19 +23,20 @@ function modelLoaded()
 console.log("PoseNet is initialized");
 }
 
-function got_poses(results)
+function gotPoses(results)
 {
-if(results.net > 0)
+if(results.length > 0)
 {
 console.log(results);
-noseX=results[0].pose.net.x-15;
-noseY=results[0].pose.net.y-15;
+noseX=results[0].pose.nose.x-15;
+noseY=results[0].pose.nose.y-15;
 }
 }
 
 function draw()
 {
-image(video,0,0,300,300)
+image(video,0,0,300,300);
+image(clown_nose,noseX,noseY,30,30);
 }
 
 function take_snapshot()
